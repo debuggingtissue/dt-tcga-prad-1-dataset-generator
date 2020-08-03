@@ -51,4 +51,5 @@ for case_directory_path in case_directory_paths:
         shutil.copy(full_input_image_patch_path, new_image_patch_path)
 
 copy_tree(input_folder_path, output_folder_path + "/all_image_patches_for_every_image_mode")
+copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
 

@@ -99,14 +99,18 @@ all_image_patches_path = args.all_image_patches
 
 path_utils.halt_script_if_path_does_not_exist(input_folder_path)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
-case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
+output_folder_path_for_images_with_highest_nuclei_count = output_folder_path + '/' + "image_patches_with_highest_nuclei_count"
+path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path_for_images_with_highest_nuclei_count)
 
+
+case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
 for case_directory_path in case_directory_paths:
     path_to_image_patches = case_directory_path + "/" + "images_original"
 
     case_id = case_directory_path.split('/')[-1]
-    case_id_output_path = output_folder_path + "/" + case_id
+    case_id_output_path = output_folder_path_for_images_with_highest_nuclei_count + "/" + case_id
     path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_output_path)
     all_image_patches_for_case_id_directory_path = all_image_patches_path + "/" + case_id
     output_image_patch_with_highest_predicted_nuclei_count(path_to_image_patches, case_id_output_path,
                                                            all_image_patches_for_case_id_directory_path, image_mode)
+copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")

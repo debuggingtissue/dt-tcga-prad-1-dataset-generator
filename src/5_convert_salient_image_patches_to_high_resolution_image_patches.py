@@ -74,3 +74,5 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
                                                           patching_area_y=image_patch_metadata_object_with_highest_saliency_prediction.y_coordinate,
                                                           patching_area_width=image_patch_metadata_object_with_highest_saliency_prediction.width,
                                                           patching_area_height=image_patch_metadata_object_with_highest_saliency_prediction.height)
+
+copy_tree(csv_input_folder_path + "/visualizations", output_folder_path + "/visualizations")

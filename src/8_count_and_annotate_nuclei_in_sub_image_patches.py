@@ -30,5 +30,6 @@ for case_directory_path in case_directory_paths:
 
     output_predictions(case_directory_path + "/", case_id_output_path)
 copy_tree(input_folder_path + "/all_image_patches_for_every_image_mode", output_folder_path + "/all_image_patches_for_every_image_mode")
+copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
 
 

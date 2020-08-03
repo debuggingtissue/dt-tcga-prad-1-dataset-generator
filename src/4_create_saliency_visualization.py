@@ -173,5 +173,6 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
 
 
 
+copy_tree(csv_input_folder_path + "/saliency_predictions_csvs", output_folder_path + "/saliency_predictions_csvs")
 
 

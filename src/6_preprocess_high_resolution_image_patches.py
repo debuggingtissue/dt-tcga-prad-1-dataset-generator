@@ -61,3 +61,4 @@ for case_directory_path in case_directory_paths:
         output_preprocessed_image_patch_to_output_directory(full_image_patch_path,
                                                             output_folder_path,
                                                             downscale_to_size)
+copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")

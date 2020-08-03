@@ -20,6 +20,7 @@ mutation_file_directory_path = args.mutation_file_path
 gene_of_interest = args.gene_of_interest
 disc_operation = args.disc_operation
 
+input_folder_path = input_folder_path + "/image_patches_with_highest_nuclei_count"
 path_utils.halt_script_if_path_does_not_exist(input_folder_path)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
 case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
