@@ -13,7 +13,8 @@ class ImagePatchMetadataObject:
                  height=None,
                  prediction_value_salient=None,
                  prediction_value_non_salient=None,
-                 prediction_nuclei_count=None):
+                 prediction_nuclei_count=None,
+                 image_patch_path=None):
         self.case_id = case_id
         self.resolution_level = resolution_level
         self.x_coordinate = x_coordinate
@@ -23,6 +24,7 @@ class ImagePatchMetadataObject:
         self.prediction_value_salient = prediction_value_salient
         self.prediction_value_non_salient = prediction_value_non_salient
         self.prediction_nuclei_count = prediction_nuclei_count
+        self.image_patch_path = image_patch_path
 
 
 def image_patch_metadata_object_from_image_patch_dict(image_patch_dict):
