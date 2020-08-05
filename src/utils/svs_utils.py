@@ -1,4 +1,6 @@
 from .enums import ResolutionLevel
+from .image_patch_metadata_object import *
+
 import openslide
 
 
@@ -25,3 +27,20 @@ def get_svs_image_of_wsi_from_path(full_image_name_path):
 
 def scale(value, from_resolution_level, to_resolution_level, svs_image):
     return value * get_SVS_level_ratio(svs_image, from_resolution_level, to_resolution_level)
+
+
+def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metadata_object, to_resolution_level,
+                                                              svs_image):
+    resolution_level = image_patch_metadata_object.resolution_level
+
+    x_coordinate = svs_utils.scale(image_patch_metadata_object.x_coordinate, resolution_level,
+                                   to_resolution_level, svs_image)
+    y_coordinate = svs_utils.scale(image_patch_metadata_object.y_coordinate, resolution_level,
+                                   to_resolution_level, svs_image)
+
+    width = svs_utils.scale(image_patch_metadata_object.width, resolution_level,
+                            to_resolution_level, svs_image)
+    height = svs_utils.scale(image_patch_metadata_object.height, resolution_level,
+                             to_resolution_level, svs_image)
+
+    return ImagePatchMetadataObject(_, to_resolution_level, x_coordinate, y_coordinate, width, height, _, _, _, _)

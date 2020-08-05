@@ -16,39 +16,19 @@ def create_jpeg_thumbnail_of_wsi(full_image_name_path):
     return thumbnail
 
 
-def draw_prediction_annotations_onto_thumbnail(svs_image,
-                                               thumbnail,
-                                               image_patch_metadata_objects,
-                                               accuracy_percentage_threshold):
-    TINT_COLOR = (0, 255, 0)  # Green
-    TRANSPARENCY = .20  # Degree of transparency, 0-100%
-    OPACITY = int(255 * TRANSPARENCY)
-
+def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
+                                                             thumbnail,
+                                                             image_patch_metadata_objects,
+                                                             accuracy_percentage_threshold):
     for image_patch_metadata_object in image_patch_metadata_objects:
 
         saliency_prediction = image_patch_metadata_object.prediction_value_salient
 
         if saliency_prediction > accuracy_percentage_threshold:
-            resolution_level = image_patch_metadata_object.resolution_level
+            image_patch_metadata_object_scaled_to_new_resolution = svs_utils.scale_image_patch_metadata_object_to_new_resolution_level(
+                image_patch_metadata_object, enums.ResolutionLevel.THUMBNAIL, svs_image)
+            thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail, image_patch_metadata_object_scaled_to_new_resolution)
 
-            x_coordinate = svs_utils.scale(image_patch_metadata_object.x_coordinate, resolution_level,
-                                           enums.ResolutionLevel.THUMBNAIL, svs_image)
-            y_coordinate = svs_utils.scale(image_patch_metadata_object.y_coordinate, resolution_level,
-                                           enums.ResolutionLevel.THUMBNAIL, svs_image)
-
-            width = svs_utils.scale(image_patch_metadata_object.width, resolution_level,
-                                    enums.ResolutionLevel.THUMBNAIL, svs_image)
-            height = svs_utils.scale(image_patch_metadata_object.height, resolution_level,
-                                     enums.ResolutionLevel.THUMBNAIL, svs_image)
-
-            overlay = Image.new('RGBA', thumbnail.size, TINT_COLOR + (0,))
-            draw = ImageDraw.Draw(overlay)  # Create a context for drawing things on it.
-            draw.rectangle(((x_coordinate, y_coordinate), (x_coordinate + width, y_coordinate + height)),
-                           fill=TINT_COLOR + (OPACITY,))
-
-            thumbnail = Image.alpha_composite(thumbnail, overlay)
-
-    thumbnail = thumbnail.convert("RGB")
     return thumbnail
 
 
@@ -81,12 +61,12 @@ output_folder_path_for_visualization_directory = output_folder_path + '/' + "vis
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path_for_visualization_directory)
 
 output_folder_path_for_saliancy_prediction_visualization_directory = output_folder_path_for_visualization_directory + '/' + "saliency_prediction_overview_visualization"
-path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path_for_saliancy_prediction_visualization_directory)
+path_utils.create_directory_if_directory_does_not_exist_at_path(
+    output_folder_path_for_saliancy_prediction_visualization_directory)
 
 output_folder_path_for_most_salient_image_patch_high_res_visualization_directory = output_folder_path_for_visualization_directory + '/' + "most_salient_image_patch_high_res"
-path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path_for_saliancy_prediction_visualization_directory)
-
-
+path_utils.create_directory_if_directory_does_not_exist_at_path(
+    output_folder_path_for_saliancy_prediction_visualization_directory)
 
 tcga_download_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(
     svs_input_folder_path)
@@ -97,10 +77,11 @@ CID_indexed_image_patch_metadata_objects_dict = image_patch_metadata_object_util
     case_image_patch_metadata_objects_csv_paths)
 
 
-def create_saliency_prediction_overview_visualization_for_case(output_folder_path_for_saliancy_prediction_visualization_directory,
-                                                               svs_image,
-                                                               case_ID,
-                                                               image_patch_metadata_objects_corresponding_to_CID):
+def create_saliency_prediction_overview_visualization_for_case(
+        output_folder_path_for_saliancy_prediction_visualization_directory,
+        svs_image,
+        case_ID,
+        image_patch_metadata_objects_corresponding_to_CID):
     output_path = output_folder_path_for_saliancy_prediction_visualization_directory + '/' + case_ID + '/'
     path_utils.create_directory_if_directory_does_not_exist_at_path(output_path)
 
@@ -110,10 +91,10 @@ def create_saliency_prediction_overview_visualization_for_case(output_folder_pat
     thumbnail.save(thumbnail_path, 'JPEG')
 
     thumbnail = thumbnail.convert("RGBA")
-    thumbnail_with_predictions_above_threshold = draw_prediction_annotations_onto_thumbnail(svs_image,
-                                                                                            thumbnail,
-                                                                                            image_patch_metadata_objects_corresponding_to_CID,
-                                                                                            accuracy_percentage_threshold)
+    thumbnail_with_predictions_above_threshold = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
+                                                                                                          thumbnail,
+                                                                                                          image_patch_metadata_objects_corresponding_to_CID,
+                                                                                                          accuracy_percentage_threshold)
     thumbnail_with_predictions_above_threshold_path = output_path + case_ID + "_multiple_annotations.jpeg"
     thumbnail_with_predictions_above_threshold.save(thumbnail_with_predictions_above_threshold_path, 'JPEG')
 
@@ -122,7 +103,8 @@ def create_saliency_prediction_overview_visualization_for_case(output_folder_pat
         image_patch_metadata_objects_corresponding_to_CID)
     thumbnail_with_single_predication = draw_prediction_annotations_onto_thumbnail(svs_image,
                                                                                    thumbnail,
-                                                                                   [image_patch_metadata_object_with_highest_saliency],
+                                                                                   [
+                                                                                       image_patch_metadata_object_with_highest_saliency],
                                                                                    accuracy_percentage_threshold)
     thumbnail_with_single_predication_path = output_path + case_ID + "_single_annotations.jpeg"
     thumbnail_with_single_predication.save(thumbnail_with_single_predication_path, 'JPEG')
@@ -132,10 +114,12 @@ def create_saliency_prediction_overview_visualization_for_case(output_folder_pat
     merged_thumbnail_image_path = output_path + case_ID + "_all_thumbnail_images.jpeg"
     merged_thumbnail_image.save(merged_thumbnail_image_path, 'JPEG')
 
-def create_most_salient_image_patch_high_res_visualization(output_folder_path_for_most_salient_image_patch_visualization_directory,
-                                                           svs_image_path,
-                                                           case_ID,
-                                                           image_patch_metadata_objects_corresponding_to_CID):
+
+def create_most_salient_image_patch_high_res_visualization(
+        output_folder_path_for_most_salient_image_patch_visualization_directory,
+        svs_image_path,
+        case_ID,
+        image_patch_metadata_objects_corresponding_to_CID):
     output_path = output_folder_path_for_most_salient_image_patch_visualization_directory + '/' + case_ID + '/'
     path_utils.create_most_if_directory_does_not_exist_at_path(output_path)
     image_patch_metadata_object_with_highest_saliency = image_patch_metadata_object_utils.get_image_patch_metadata_object_with_the_highest_saliency(
@@ -150,9 +134,6 @@ def create_most_salient_image_patch_high_res_visualization(output_folder_path_fo
                                                        patch_area_height=image_patch_metadata_object_with_highest_saliency.height)
 
 
-
-
-
 for tcga_download_directories_path_index, tcga_download_directory_path in enumerate(
         tcga_download_directory_paths):
     image_paths_of_sample = path_utils.create_full_paths_to_files_in_directory_path(tcga_download_directory_path)
@@ -161,18 +142,16 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
     image_patch_metadata_objects_corresponding_to_CID = CID_indexed_image_patch_metadata_objects_dict[case_ID]
 
     svs_image = svs_utils.get_svs_image_of_wsi_from_path(image_path_of_first_svs_image)
-    create_saliency_prediction_overview_visualization_for_case(output_folder_path_for_saliancy_prediction_visualization_directory,
-                                                               svs_image,
-                                                               case_ID,
-                                                               image_patch_metadata_objects_corresponding_to_CID)
+    create_saliency_prediction_overview_visualization_for_case(
+        output_folder_path_for_saliancy_prediction_visualization_directory,
+        svs_image,
+        case_ID,
+        image_patch_metadata_objects_corresponding_to_CID)
 
-    create_most_salient_image_patch_high_res_visualization(output_folder_path_for_saliancy_prediction_visualization_directory,
-                                                               image_path_of_first_svs_image,
-                                                               case_ID,
-                                                               image_patch_metadata_objects_corresponding_to_CID)
-
-
+    create_most_salient_image_patch_high_res_visualization(
+        output_folder_path_for_saliancy_prediction_visualization_directory,
+        image_path_of_first_svs_image,
+        case_ID,
+        image_patch_metadata_objects_corresponding_to_CID)
 
 copy_tree(csv_input_folder_path + "/saliency_predictions_csvs", output_folder_path + "/saliency_predictions_csvs")
-
-
