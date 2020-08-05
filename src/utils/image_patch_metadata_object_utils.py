@@ -40,6 +40,5 @@ def case_directory_paths_containing_image_patches_to_dict_indexed_by_CID(case_di
         first_image_patch_path = image_patch_paths[0]
         image_name = first_image_patch_path.split('/')[-1]
         image_patch_metadata_object = parse_image_patch_file_name_into_image_patch_metadata_object(image_name)
-        image_patch_metadata_object.image_patch_path =
         dict[image_patch_metadata_object.case_id] = image_patch_metadata_object
     return dict
