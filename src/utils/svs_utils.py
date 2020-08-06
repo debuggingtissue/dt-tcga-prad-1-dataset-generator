@@ -43,4 +43,4 @@ def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metada
     height = scale(image_patch_metadata_object.height, resolution_level,
                              to_resolution_level, svs_image)
 
-    return ImagePatchMetadataObject(_, to_resolution_level, x_coordinate, y_coordinate, width, height, _, _, _, _)
+    return ImagePatchMetadataObject(to_resolution_level=to_resolution_level, x_coordinate=x_coordinate, y_coordinate=y_coordinate, width=width, height=height)
