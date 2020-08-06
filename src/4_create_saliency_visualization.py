@@ -26,7 +26,8 @@ def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
         if saliency_prediction > accuracy_percentage_threshold:
             image_patch_metadata_object_scaled_to_new_resolution = svs_utils.scale_image_patch_metadata_object_to_new_resolution_level(
                 image_patch_metadata_object, enums.ResolutionLevel.THUMBNAIL, svs_image)
-            thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail, image_patch_metadata_object_scaled_to_new_resolution)
+            thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail,
+                                                                   image_patch_metadata_object_scaled_to_new_resolution)
             thumbnail = thumbnail.convert("RGBA")
 
     thumbnail = thumbnail.convert("RGB")
@@ -102,11 +103,10 @@ def create_saliency_prediction_overview_visualization_for_case(
     thumbnail = thumbnail.convert("RGBA")
     image_patch_metadata_object_with_highest_saliency = image_patch_metadata_object_utils.get_image_patch_metadata_object_with_the_highest_saliency(
         image_patch_metadata_objects_corresponding_to_CID)
-    thumbnail_with_single_predication = draw_prediction_annotations_onto_thumbnail(svs_image,
-                                                                                   thumbnail,
-                                                                                   [
-                                                                                       image_patch_metadata_object_with_highest_saliency],
-                                                                                   accuracy_percentage_threshold)
+    thumbnail_with_single_predication = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
+                                                                                                 thumbnail,
+                                                                                                 [image_patch_metadata_object_with_highest_saliency],
+                                                                                                 accuracy_percentage_threshold)
     thumbnail_with_single_predication_path = output_path + case_ID + "_single_annotations.jpeg"
     thumbnail_with_single_predication.save(thumbnail_with_single_predication_path, 'JPEG')
 
