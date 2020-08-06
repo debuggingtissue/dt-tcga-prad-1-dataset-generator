@@ -29,6 +29,7 @@ def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
             thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail, image_patch_metadata_object_scaled_to_new_resolution)
             thumbnail = thumbnail.convert("RGBA")
 
+    thumbnail = thumbnail.convert("RGB")
     return thumbnail
 
 
