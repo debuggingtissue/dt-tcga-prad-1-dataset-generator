@@ -27,6 +27,7 @@ def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
             image_patch_metadata_object_scaled_to_new_resolution = svs_utils.scale_image_patch_metadata_object_to_new_resolution_level(
                 image_patch_metadata_object, enums.ResolutionLevel.THUMBNAIL, svs_image)
             thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail, image_patch_metadata_object_scaled_to_new_resolution)
+            thumbnail = thumbnail.convert("RGBA")
 
     return thumbnail
 
@@ -89,6 +90,7 @@ def create_saliency_prediction_overview_visualization_for_case(
     thumbnail_path = output_path + case_ID + "_original.jpeg"
     thumbnail.save(thumbnail_path, 'JPEG')
 
+    thumbnail = thumbnail.convert("RGBA")
     thumbnail_with_predictions_above_threshold = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
                                                                                                           thumbnail,
                                                                                                           image_patch_metadata_objects_corresponding_to_CID,
