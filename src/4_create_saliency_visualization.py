@@ -124,7 +124,6 @@ def create_most_salient_image_patch_high_res_visualization(
     path_utils.create_most_if_directory_does_not_exist_at_path(output_path)
     image_patch_metadata_object_with_highest_saliency = image_patch_metadata_object_utils.get_image_patch_metadata_object_with_the_highest_saliency(
         image_patch_metadata_objects_corresponding_to_CID)
-
     svs_image_patch_extractor.extract_image_patch_jpeg(svs_image_path, output_path,
                                                        to_resolution_level=enums.ResolutionLevel.LEVEL_3,
                                                        from_resolution_level=image_patch_metadata_object_with_highest_saliency.resolution_level,

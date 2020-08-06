@@ -22,3 +22,6 @@ class SVSLoader:
             svs_case_id = first_image_name_path.split('/')[-1][:-4]
             dict[svs_case_id] = zero_indexed_svs
         return dict
+
+    def get_0_indexed_svs_path_for_CID(self, cid):
+        return self.zero_indexed_svs_images_dict_indexed_by_CID[cid]
