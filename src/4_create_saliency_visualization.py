@@ -6,7 +6,7 @@ import openslide
 from utils import path_utils
 from utils import enums
 from utils import svs_utils, image_patch_predictions_constants, image_patch_file_name_constants, \
-    image_patch_metadata_object_utils, image_patch_metadata_object, image_utils, svs_image_patch_extractor,
+    image_patch_metadata_object_utils, image_patch_metadata_object, image_utils, svs_image_patch_extractor
 
 
 def create_jpeg_thumbnail_of_wsi(full_image_name_path):
