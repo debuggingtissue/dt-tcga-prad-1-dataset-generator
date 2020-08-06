@@ -29,7 +29,8 @@ def scale(value, from_resolution_level, to_resolution_level, svs_image):
     return value * get_SVS_level_ratio(svs_image, from_resolution_level, to_resolution_level)
 
 
-def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metadata_object, to_resolution_level,
+def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metadata_object,
+                                                              to_resolution_level,
                                                               svs_image):
     resolution_level = image_patch_metadata_object.resolution_level
 
@@ -43,4 +44,4 @@ def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metada
     height = scale(image_patch_metadata_object.height, resolution_level,
                              to_resolution_level, svs_image)
 
-    return ImagePatchMetadataObject(to_resolution_level=to_resolution_level, x_coordinate=x_coordinate, y_coordinate=y_coordinate, width=width, height=height)
+    return ImagePatchMetadataObject(resolution_level=to_resolution_level, x_coordinate=x_coordinate, y_coordinate=y_coordinate, width=width, height=height)
