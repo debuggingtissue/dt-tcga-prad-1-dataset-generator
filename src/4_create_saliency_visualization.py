@@ -72,7 +72,7 @@ tcga_download_directory_paths = path_utils.create_full_paths_to_directories_in_d
     svs_input_folder_path)
 
 case_image_patch_metadata_objects_csv_paths = path_utils.create_full_paths_to_files_in_directory_path(
-    csv_input_folder_path + '/' + "saliency_predictions_csvs")
+    csv_input_folder_path)
 CID_indexed_image_patch_metadata_objects_dict = image_patch_metadata_object_utils.case_image_patch_metadata_csv_paths_to_dict_indexed_by_CID(
     case_image_patch_metadata_objects_csv_paths)
 
