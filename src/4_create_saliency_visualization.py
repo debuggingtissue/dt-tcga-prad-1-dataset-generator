@@ -155,4 +155,7 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
         case_ID,
         image_patch_metadata_objects_corresponding_to_CID)
 
-copy_tree(csv_input_folder_path + "/saliency_predictions_csvs", output_folder_path + "/saliency_predictions_csvs")
+
+saliency_predictions_csvs_output_path = output_folder_path + "/saliency_predictions_csvs"
+path_utils.create_directory_if_directory_does_not_exist_at_path(saliency_predictions_csvs_output_path)
+copy_tree(csv_input_folder_path, saliency_predictions_csvs_output_path)
