@@ -150,7 +150,7 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
         image_patch_metadata_objects_corresponding_to_CID)
 
     create_most_salient_image_patch_high_res_visualization(
-        output_folder_path_for_saliancy_prediction_visualization_directory,
+        output_folder_path_for_most_salient_image_patch_high_res_visualization_directory,
         image_path_of_first_svs_image,
         case_ID,
         image_patch_metadata_objects_corresponding_to_CID)
