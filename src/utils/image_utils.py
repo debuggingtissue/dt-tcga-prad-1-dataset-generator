@@ -1,5 +1,5 @@
 import sys
-from PIL import Image
+from PIL import Image, ImageDraw
 
 def merge_images_horizontally(list_of_image_paths):
 

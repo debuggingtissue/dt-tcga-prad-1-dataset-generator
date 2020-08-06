@@ -1,7 +1,6 @@
 import argparse
 import os
 from os.path import isfile, join
-from PIL import Image, ImageDraw
 import openslide
 from utils import path_utils
 from utils import enums
