@@ -55,11 +55,13 @@ path_utils.halt_script_if_path_does_not_exist(input_folder_path)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
 case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
 
+output_path = output_folder_path + '/' + "preprocessed_high_res_image_patches" + "/"
+
+
 for case_directory_path in case_directory_paths:
     full_image_patch_paths = path_utils.create_full_paths_to_files_in_directory_path(case_directory_path)
     for full_image_patch_path in full_image_patch_paths:
-        output_path = output_folder_path + '/'
         output_preprocessed_image_patch_to_output_directory(full_image_patch_path,
-                                                            output_folder_path,
+                                                            output_path,
                                                             downscale_to_size)
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
