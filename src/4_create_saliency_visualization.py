@@ -104,6 +104,7 @@ def create_saliency_prediction_overview_visualization_for_case(
     thumbnail = thumbnail.convert("RGBA")
     image_patch_metadata_object_with_highest_saliency = image_patch_metadata_object_utils.get_image_patch_metadata_object_with_the_highest_saliency(
         image_patch_metadata_objects_corresponding_to_CID)
+
     thumbnail_with_single_predication = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
                                                                                                  thumbnail,
                                                                                                  [image_patch_metadata_object_with_highest_saliency],
@@ -120,15 +121,15 @@ def create_saliency_prediction_overview_visualization_for_case(
 def create_most_salient_image_patch_high_res_visualization(
         output_folder_path_for_most_salient_image_patch_visualization_directory,
         svs_image_path,
-        case_ID,
         image_patch_metadata_objects_corresponding_to_CID):
-    output_path = output_folder_path_for_most_salient_image_patch_visualization_directory + '/' + case_ID + '/'
+    output_path = output_folder_path_for_most_salient_image_patch_visualization_directory
     path_utils.create_directory_if_directory_does_not_exist_at_path(output_path)
     image_patch_metadata_object_with_highest_saliency = image_patch_metadata_object_utils.get_image_patch_metadata_object_with_the_highest_saliency(
         image_patch_metadata_objects_corresponding_to_CID)
+    print(image_patch_metadata_object_with_highest_saliency)
     svs_image_patch_extractor.extract_image_patch_jpeg(svs_image_path, output_path,
-                                                       to_resolution_level=enums.ResolutionLevel.LEVEL_3,
                                                        from_resolution_level=image_patch_metadata_object_with_highest_saliency.resolution_level,
+                                                       to_resolution_level=enums.ResolutionLevel.LEVEL_2,
                                                        patch_area_x=image_patch_metadata_object_with_highest_saliency.x_coordinate,
                                                        patch_area_y=image_patch_metadata_object_with_highest_saliency.y_coordinate,
                                                        patch_area_width=image_patch_metadata_object_with_highest_saliency.width,
@@ -152,7 +153,6 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
     create_most_salient_image_patch_high_res_visualization(
         output_folder_path_for_most_salient_image_patch_high_res_visualization_directory,
         image_path_of_first_svs_image,
-        case_ID,
         image_patch_metadata_objects_corresponding_to_CID)
 
 

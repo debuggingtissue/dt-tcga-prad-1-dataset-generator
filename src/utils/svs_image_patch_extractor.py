@@ -83,8 +83,8 @@ def split_to_jpeg_image_patches(full_image_path,
             reader_x_start_position = x_start_position
             reader_y_start_position = y_start_position
             if to_resolution_level != enums.ResolutionLevel.LEVEL_0_BASE:
-                reader_x_start_position = int(svs_utils.scale(x_start_position, to_resolution_level, from_resolution_level, img))
-                reader_y_start_position = int(svs_utils.scale(y_start_position, to_resolution_level, from_resolution_level, img))
+                reader_x_start_position = int(svs_utils.scale(x_start_position, to_resolution_level, enums.ResolutionLevel.LEVEL_0_BASE, img))
+                reader_y_start_position = int(svs_utils.scale(y_start_position, to_resolution_level, enums.ResolutionLevel.LEVEL_0_BASE, img))
 
             patch = img.read_region((reader_x_start_position, reader_y_start_position),
                                     to_resolution_level,
@@ -120,8 +120,8 @@ def split_to_jpeg_image_patches(full_image_path,
 
 def extract_image_patch_jpeg(full_image_path,
                             full_output_path,
-                            to_resolution_level,
                             from_resolution_level=enums.ResolutionLevel.LEVEL_0_BASE,
+                            to_resolution_level=None,
                             patch_area_x=None,
                             patch_area_y=None,
                             patch_area_width=None,
@@ -149,9 +149,9 @@ def extract_image_patch_jpeg(full_image_path,
     reader_y_start_position = original_start_position_y_label
     if to_resolution_level != enums.ResolutionLevel.LEVEL_0_BASE:
         reader_x_start_position = int(
-            svs_utils.scale(original_start_position_x_label, to_resolution_level, from_resolution_level, img))
+            svs_utils.scale(original_start_position_x_label, to_resolution_level, enums.ResolutionLevel.LEVEL_0_BASE, img))
         reader_y_start_position = int(
-            svs_utils.scale(original_start_position_y_label, to_resolution_level, from_resolution_level, img))
+            svs_utils.scale(original_start_position_y_label, to_resolution_level, enums.ResolutionLevel.LEVEL_0_BASE, img))
 
     patch = img.read_region((reader_x_start_position, reader_y_start_position),
                             to_resolution_level,
@@ -161,7 +161,10 @@ def extract_image_patch_jpeg(full_image_path,
     patch_rgb.paste(patch, mask=patch.split()[3])
 
     print("\n")
-    print("Patch data", original_start_position_x_label, original_start_position_y_label, to_resolution_level, patch_width, patch_height)
+    print("Image patch data", original_start_position_x_label, original_start_position_y_label, to_resolution_level, patch_width, patch_height)
+    print("\n")
+    print("\n")
+    print("\n")
 
     # compress the image
     # patch_rgb = patch_rgb.resize(
