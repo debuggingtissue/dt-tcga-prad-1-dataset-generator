@@ -1,13 +1,14 @@
 import argparse
 from utils import svs_utils, image_patch_predictions_constants, image_patch_file_name_constants, path_utils, \
     svs_image_patch_extractor, enums, image_patch_metadata_object_utils
+from distutils.dir_util import copy_tree
 
 
 parser = argparse.ArgumentParser(
     description="Generate high resolution image patches of an image patch at a lower resolution")
 parser.add_argument("-svs", "--svs_input_folder_path", type=str, help=" The path to the SVS input folder.",
                     required=True)
-parser.add_argument("-csv", "--csv_input_folder_path", type=str, help="The path to the CSV input folder.",
+parser.add_argument("-i", "--input_folder_path", type=str, help="The path to the input folder.",
                     required=True)
 
 parser.add_argument("-o", "--output_folder_path", type=str, help="The path to the output folder."
@@ -32,8 +33,10 @@ parser.add_argument("-ws ", "--window_size", type=int, default=10000,
 args = parser.parse_args()
 
 svs_input_folder_path = args.svs_input_folder_path
-csv_input_folder_path = args.csv_input_folder_path
-csv_input_folder_path = csv_input_folder_path + '/' + "saliency_predictions_csvs"
+input_folder_path = args.input_folder_path
+csv_input_folder_path = input_folder_path + '/' + "saliency_predictions_csvs"
+visualizations_folder_path = input_folder_path + '/' + "visualizations"
+
 output_folder_path = args.output_folder_path
 to_resolution_level = int(args.resolution_level)
 overlapping_percentage = float("{0:.2f}".format(args.overlap_percentage / 100))
@@ -75,4 +78,4 @@ for tcga_download_directories_path_index, tcga_download_directory_path in enumer
                                                           patching_area_width=image_patch_metadata_object_with_highest_saliency_prediction.width,
                                                           patching_area_height=image_patch_metadata_object_with_highest_saliency_prediction.height)
 
-copy_tree(csv_input_folder_path + "/visualizations", output_folder_path + "/visualizations")
+copy_tree(visualizations_folder_path, output_folder_path + "/visualizations")

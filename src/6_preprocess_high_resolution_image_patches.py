@@ -2,6 +2,7 @@ from PIL import Image
 import argparse
 from os.path import join
 from utils import path_utils, image_preprocessing_utils
+from distutils.dir_util import copy_tree
 
 
 def output_preprocessed_image_patch_to_output_directory(full_image_path,
