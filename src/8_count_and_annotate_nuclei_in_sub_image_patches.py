@@ -16,8 +16,9 @@ parser.add_argument("-o", "--output_folder_path", type=str, help="The path to th
                     required=True)
 args = parser.parse_args()
 
-input_folder_path = args.input_folder_path
+input_folder_path = args.input_folder_path + '/' + "preproessesed_image_patches_organized_for_classifier" + "/"
 output_folder_path = args.output_folder_path
+image_patches_with_nuclei_counts_output_folder_path = args.output_folder_path + '/' + "image_patches_with_nuclei_counts" + "/"
 
 path_utils.halt_script_if_path_does_not_exist(input_folder_path)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
@@ -25,11 +26,12 @@ case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_
 
 for case_directory_path in case_directory_paths:
     case_id = case_directory_path.split('/')[-1]
-    case_id_output_path = output_folder_path + "/" + case_id
+    case_id_output_path = image_patches_with_nuclei_counts_output_folder_path + "/" + case_id
     path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_output_path)
 
     output_predictions(case_directory_path + "/", case_id_output_path)
-copy_tree(input_folder_path + "/all_image_patches_for_every_image_mode", output_folder_path + "/all_image_patches_for_every_image_mode")
+copy_tree(input_folder_path + "/preprocessed_high_res_image_patches", output_folder_path + "/preprocessed_high_res_image_patches")
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
 
+output_path = output_folder_path + '/' + "preprocessed_high_res_image_patches" + "/"
 

@@ -32,16 +32,17 @@ def scale(value, from_resolution_level, to_resolution_level, svs_image):
 def scale_image_patch_metadata_object_to_new_resolution_level(image_patch_metadata_object,
                                                               to_resolution_level,
                                                               svs_image):
-    resolution_level = image_patch_metadata_object.resolution_level
+    resolution_level = int(image_patch_metadata_object.resolution_level)
+    to_resolution_level = int(to_resolution_level)
 
-    x_coordinate = scale(image_patch_metadata_object.x_coordinate, resolution_level,
+    x_coordinate = scale(int(image_patch_metadata_object.x_coordinate), resolution_level,
                                    to_resolution_level, svs_image)
-    y_coordinate = scale(image_patch_metadata_object.y_coordinate, resolution_level,
+    y_coordinate = scale(int(image_patch_metadata_object.y_coordinate), resolution_level,
                                    to_resolution_level, svs_image)
 
-    width = scale(image_patch_metadata_object.width, resolution_level,
+    width = scale(int(image_patch_metadata_object.width), resolution_level,
                             to_resolution_level, svs_image)
-    height = scale(image_patch_metadata_object.height, resolution_level,
+    height = scale(int(image_patch_metadata_object.height), resolution_level,
                              to_resolution_level, svs_image)
 
     return ImagePatchMetadataObject(resolution_level=to_resolution_level, x_coordinate=x_coordinate, y_coordinate=y_coordinate, width=width, height=height)

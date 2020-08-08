@@ -1,5 +1,6 @@
 import sys
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
+
 
 def merge_images_horizontally(list_of_image_paths):
 
@@ -30,7 +31,7 @@ def draw_annotation_box_onto_image(image_to_draw_on, image_patch_metadata_object
                     (
                         image_patch_metadata_object_containing_annotation_box_values.x_coordinate + image_patch_metadata_object_containing_annotation_box_values.width,
                         image_patch_metadata_object_containing_annotation_box_values.y_coordinate + image_patch_metadata_object_containing_annotation_box_values.height)),
-                   fill=TINT_COLOR + (OPACITY,))
+                   fill=TINT_COLOR + (OPACITY,), outline="black", width=4)
 
     image_with_annotation_box = Image.alpha_composite(image_to_draw_on, overlay)
     image_with_annotation_box = image_with_annotation_box.convert("RGB")

@@ -21,6 +21,8 @@ input_folder_path = args.input_folder_path
 
 images_input_folder_path = args.input_folder_path + '/' + "preprocessed_high_res_image_patches" + "/"
 output_folder_path = args.output_folder_path
+reorganized_image_patches = args.output_folder_path + '/' + "preproessesed_image_patches_organized_for_classifier" + "/"
+
 image_mode = args.image_mode
 
 path_utils.halt_script_if_path_does_not_exist(images_input_folder_path)
@@ -37,7 +39,7 @@ for case_directory_path in case_directory_paths:
 
     for full_input_image_patch_path in full_image_patch_paths:
         case_id = full_input_image_patch_path.split('/')[-3]
-        case_id_directory_path = output_folder_path + "/" + case_id
+        case_id_directory_path = reorganized_image_patches + "/" + case_id
         path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_directory_path)
 
         image_patch_file = full_input_image_patch_path.split('/')[-1][:-4]
@@ -52,6 +54,6 @@ for case_directory_path in case_directory_paths:
 
         shutil.copy(full_input_image_patch_path, new_image_patch_path)
 
-copy_tree(input_folder_path, output_folder_path + "/all_image_patches_for_every_image_mode")
+copy_tree(images_input_folder_path, output_folder_path + "/preprocessed_high_res_image_patches")
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
 

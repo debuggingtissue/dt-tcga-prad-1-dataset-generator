@@ -1,6 +1,7 @@
 import csv
 from .image_patch_metadata_object import *
-
+from .path_utils import *
+from .image_patch_file_name_parser import *
 
 def case_image_patch_metadata_csv_paths_to_dict_indexed_by_CID(csv_paths):
     dict = {}
@@ -36,7 +37,7 @@ def get_image_patch_metadata_object_with_the_highest_saliency(image_patch_metada
 def case_directory_paths_containing_image_patches_to_dict_indexed_by_CID(case_directory_paths):
     dict = {}
     for case_directory_path in case_directory_paths:
-        image_patch_paths = path_utils.create_full_paths_to_files_in_directory_path(case_directory_path)
+        image_patch_paths = create_full_paths_to_files_in_directory_path(case_directory_path)
         first_image_patch_path = image_patch_paths[0]
         image_name = first_image_patch_path.split('/')[-1]
         image_patch_metadata_object = parse_image_patch_file_name_into_image_patch_metadata_object(image_name)
