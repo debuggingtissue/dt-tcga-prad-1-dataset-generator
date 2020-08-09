@@ -45,6 +45,9 @@ parser.add_argument("-o", "--output_folder_path", type=str, help="The path to th
 args = parser.parse_args()
 
 input_folder_path = args.input_folder_path
+input_folder_path_for_high_res_image_patches = args.input_folder_path + "/image_patches_with_highest_nuclei_count/images_original"
+print(input_folder_path)
+
 svs_input_folder_path = args.svs_input_folder_path
 output_folder_path = args.output_folder_path
 visualizations_output_path = output_folder_path + "/visualizations"
@@ -58,10 +61,10 @@ path_utils.halt_script_if_path_does_not_exist(input_folder_path)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
 
 most_salient_image_patch_case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(
-    input_folder_path + '/' + "visualizations/most_salient_image_patch_high_res")
+    input_folder_path + "/visualizations/most_salient_image_patch_high_res")
 CID_indexed_high_saliency_image_patch_metadata_objects_dict = image_patch_metadata_object_utils.case_directory_paths_containing_image_patches_to_dict_indexed_by_CID(most_salient_image_patch_case_directory_paths)
 
-high_nuclei_count_case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path + '/' + "image_patches_with_highest_nuclei_count/")
+high_nuclei_count_case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path_for_high_res_image_patches)
 
 
 for high_nuclei_count_case_directory_path in high_nuclei_count_case_directory_paths:

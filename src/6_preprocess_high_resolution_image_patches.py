@@ -65,3 +65,4 @@ for case_directory_path in case_directory_paths:
                                                             output_path,
                                                             downscale_to_size)
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
+copy_tree(output_path, output_folder_path + "/visualizations/preprocessed_high_res_image_patches")

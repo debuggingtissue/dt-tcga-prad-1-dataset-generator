@@ -46,11 +46,15 @@ def get_target_image_patch_path(all_image_patch_paths_for_specific_image_mode, t
 
 
 def output_image_patch_with_highest_predicted_nuclei_count(image_patches_path, output_diretory_path,
-                                                           all_image_patches_for_case_id_directory_path, image_mode):
+                                                           all_image_patches_for_case_id_directory_path, image_mode, with_image_mask=False):
     image_patch_paths = path_utils.create_full_paths_to_files_in_directory_path(image_patches_path)
     image_patch_path_with_highest_nuclei_count = get_image_patch_path_with_highest_nuclei_count(image_patch_paths)
 
     image_patch_file = image_patch_path_with_highest_nuclei_count.split('/')[-1]
+    if(with_image_mask is True):
+        new_image_patch_path = output_diretory_path + "/" + image_patch_file
+        shutil.copy(image_patch_path_with_highest_nuclei_count, new_image_patch_path)
+        return
 
     all_image_patches_mode_paths = path_utils.create_full_paths_to_directories_in_directory_path(
         all_image_patches_for_case_id_directory_path)
@@ -115,9 +119,22 @@ for case_directory_path in case_directory_paths:
     path_to_image_patches = case_directory_path + "/" + "images_original"
 
     case_id = case_directory_path.split('/')[-1]
-    case_id_output_path = output_folder_path_for_images_with_highest_nuclei_count + "/" + case_id
+    case_id_output_path = output_folder_path_for_images_with_highest_nuclei_count + "/images_original/" + case_id
     path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_output_path)
     all_image_patches_for_case_id_directory_path = preprocessed_high_res_image_patches_path + "/" + case_id
     output_image_patch_with_highest_predicted_nuclei_count(path_to_image_patches, case_id_output_path,
                                                            all_image_patches_for_case_id_directory_path, image_mode)
+for case_directory_path in case_directory_paths:
+    path_to_image_patches = case_directory_path + "/" + "images_annotated"
+
+    case_id = case_directory_path.split('/')[-1]
+    case_id_output_path = output_folder_path_for_images_with_highest_nuclei_count + "/images_annotated/" + case_id
+    path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_output_path)
+    all_image_patches_for_case_id_directory_path = preprocessed_high_res_image_patches_path + "/" + case_id
+    output_image_patch_with_highest_predicted_nuclei_count(path_to_image_patches, case_id_output_path,
+                                                           all_image_patches_for_case_id_directory_path, image_mode, with_image_mask=True)
+
+
+
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
+copy_tree(output_folder_path_for_images_with_highest_nuclei_count, output_folder_path + "/visualizations/image_patches_with_highest_nuclei_count")
