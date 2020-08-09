@@ -46,7 +46,6 @@ args = parser.parse_args()
 
 input_folder_path = args.input_folder_path
 input_folder_path_for_high_res_image_patches = args.input_folder_path + "/image_patches_with_highest_nuclei_count/images_original"
-print(input_folder_path)
 
 svs_input_folder_path = args.svs_input_folder_path
 output_folder_path = args.output_folder_path
