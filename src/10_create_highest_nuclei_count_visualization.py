@@ -5,6 +5,7 @@ from utils import enums
 from utils import svs_utils, image_patch_predictions_constants, image_patch_file_name_constants, \
     image_patch_metadata_object_utils, image_patch_metadata_object, image_utils, svs_image_patch_extractor, svs_loader as svs_l,path_utils,image_patch_file_name_parser
 from PIL import Image, ImageDraw
+from distutils.dir_util import copy_tree
 
 def annotate_the_region_on_image_patch_with_the_highest_nuclei_count(highest_saliency_image_patch_metadata_object,
                                                                      high_nuclei_count_metadata_object,
@@ -46,6 +47,10 @@ args = parser.parse_args()
 input_folder_path = args.input_folder_path
 svs_input_folder_path = args.svs_input_folder_path
 output_folder_path = args.output_folder_path
+visualizations_output_path = output_folder_path + "/visualizations"
+copy_tree(input_folder_path + "/visualizations", visualizations_output_path)
+highest_nuclei_count_visualization_output_path = visualizations_output_path + "/highest_nuclei_count_annotations_on_most_salient_high_res_image_patch"
+
 
 svs_loader = svs_l.SVSLoader(svs_input_folder_path)
 
@@ -67,6 +72,6 @@ for high_nuclei_count_case_directory_path in high_nuclei_count_case_directory_pa
 
     corresponding_image_patch_metadata_object_with_highest_saliency = CID_indexed_high_saliency_image_patch_metadata_objects_dict[image_patch_metadata_object_with_high_nucleus.case_id]
     corresponding_image_patch_metadata_object_with_highest_saliency.image_patch_path = path_utils.create_full_paths_to_files_in_directory_path(input_folder_path + "/visualizations/most_salient_image_patch_high_res/" + corresponding_image_patch_metadata_object_with_highest_saliency.case_id )[0]
-    annotate_the_region_on_image_patch_with_the_highest_nuclei_count(corresponding_image_patch_metadata_object_with_highest_saliency, image_patch_metadata_object_with_high_nucleus, svs_loader, output_folder_path)
+    annotate_the_region_on_image_patch_with_the_highest_nuclei_count(corresponding_image_patch_metadata_object_with_highest_saliency, image_patch_metadata_object_with_high_nucleus, svs_loader, highest_nuclei_count_visualization_output_path)
 
 copy_tree(input_folder_path + "/image_patches_with_highest_nuclei_count", output_folder_path + "/image_patches_with_highest_nuclei_count")
