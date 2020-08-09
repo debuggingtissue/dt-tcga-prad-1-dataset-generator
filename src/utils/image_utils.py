@@ -19,6 +19,24 @@ def merge_images_horizontally(list_of_image_paths):
 
     return new_im
 
+def merge_images_vertically(list_of_images):
+
+    images = list_of_images
+    widths, heights = zip(*(i.size for i in images))
+
+    total_height = sum(heights)
+    max_width = max(widths)
+
+    new_im = Image.new('RGB', (max_width, total_height))
+
+    y_offset = 0
+    for im in images:
+      new_im.paste(im, (0, y_offset))
+      y_offset += im.size[1]
+
+    return new_im
+
+
 def draw_annotation_box_onto_image(image_to_draw_on, image_patch_metadata_object_containing_annotation_box_values):
     TINT_COLOR = (0, 255, 0)  # Green
     TRANSPARENCY = .20  # Degree of transparency, 0-100%
