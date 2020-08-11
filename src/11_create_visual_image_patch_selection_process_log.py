@@ -1,6 +1,7 @@
 import argparse
 from utils import path_utils, image_preprocessing_utils, gene_mutation_image_patch_labeler, image_utils
 from PIL import Image, ImageDraw
+from distutils.dir_util import copy_tree
 
 
 def create_image_patch_selection_process_log_image(case_id):
@@ -47,13 +48,21 @@ parser.add_argument("-o", "--output_folder_path", type=str, help="The path to th
 args = parser.parse_args()
 
 input_folder_path = args.input_folder_path
+visualizations_input_folder_path = args.input_folder_path + "/visualizations"
 output_folder_path = args.output_folder_path
+visualizations_output_path = output_folder_path + "/visualizations/selection_process_log_image/"
+
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
+path_utils.create_directory_if_directory_does_not_exist_at_path(visualizations_output_path)
+
 
 saliency_prediction_overview_visualization_paths = path_utils.create_full_paths_to_directories_in_directory_path(
     input_folder_path + "/visualizations/saliency_prediction_overview_visualization")
 list_of_case_ids = [case_id_path.split('/')[-1] for case_id_path in saliency_prediction_overview_visualization_paths]
 for case_id in list_of_case_ids:
     image_patch_selection_process_log_image = create_image_patch_selection_process_log_image(case_id)
-    image_patch_selection_process_log_image.save(output_folder_path + "/" + case_id, 'JPEG')
+    image_patch_selection_process_log_image.save(visualizations_output_path + case_id +".png", 'PNG')
+copy_tree(visualizations_input_folder_path, output_folder_path + "/visualizations")
+copy_tree(input_folder_path + "/image_patches_with_highest_nuclei_count", output_folder_path + "/image_patches_with_highest_nuclei_count")
+
 
