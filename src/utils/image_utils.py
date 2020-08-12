@@ -3,7 +3,6 @@ from PIL import Image, ImageDraw, ImageOps
 
 
 def merge_images_horizontally(list_of_image_paths):
-
     images = [Image.open(x) for x in list_of_image_paths]
     widths, heights = zip(*(i.size for i in images))
 
@@ -14,13 +13,13 @@ def merge_images_horizontally(list_of_image_paths):
 
     x_offset = 0
     for im in images:
-      new_im.paste(im, (x_offset,0))
-      x_offset += im.size[0]
+        new_im.paste(im, (x_offset, 0))
+        x_offset += im.size[0]
 
     return new_im
 
-def merge_images_vertically(list_of_images):
 
+def merge_images_vertically(list_of_images):
     images = list_of_images
     widths, heights = zip(*(i.size for i in images))
 
@@ -31,13 +30,14 @@ def merge_images_vertically(list_of_images):
 
     y_offset = 0
     for im in images:
-      new_im.paste(im, (0, y_offset))
-      y_offset += im.size[1]
+        new_im.paste(im, (0, y_offset))
+        y_offset += im.size[1]
 
     return new_im
 
 
-def draw_annotation_box_onto_image(image_to_draw_on, image_patch_metadata_object_containing_annotation_box_values):
+def draw_annotation_box_onto_image(image_to_draw_on, image_patch_metadata_object_containing_annotation_box_values,
+                                   draw_border):
     TINT_COLOR = (0, 255, 0)  # Green
     TRANSPARENCY = .20  # Degree of transparency, 0-100%
     OPACITY = int(255 * TRANSPARENCY)
@@ -49,7 +49,7 @@ def draw_annotation_box_onto_image(image_to_draw_on, image_patch_metadata_object
                     (
                         image_patch_metadata_object_containing_annotation_box_values.x_coordinate + image_patch_metadata_object_containing_annotation_box_values.width,
                         image_patch_metadata_object_containing_annotation_box_values.y_coordinate + image_patch_metadata_object_containing_annotation_box_values.height)),
-                   fill=TINT_COLOR + (OPACITY,), outline="black", width=4)
+                   fill=TINT_COLOR + (OPACITY,), outline="black" if draw_border else None, width=4 if draw_border else 0)
 
     image_with_annotation_box = Image.alpha_composite(image_to_draw_on, overlay)
     image_with_annotation_box = image_with_annotation_box.convert("RGB")

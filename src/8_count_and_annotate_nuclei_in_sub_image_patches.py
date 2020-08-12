@@ -15,14 +15,14 @@ parser.add_argument("-o", "--output_folder_path", type=str, help="The path to th
                                                                  "the script will create it.",
                     required=True)
 args = parser.parse_args()
-
-input_folder_path = args.input_folder_path + '/' + "preproessesed_image_patches_organized_for_classifier" + "/"
+input_folder_path = args.input_folder_path
+input_folder_path_for_classifier = input_folder_path + '/' + "preprocessed_image_patches_organized_for_classifier"
 output_folder_path = args.output_folder_path
-image_patches_with_nuclei_counts_output_folder_path = args.output_folder_path + '/' + "image_patches_with_nuclei_counts" + "/"
+image_patches_with_nuclei_counts_output_folder_path = args.output_folder_path + '/' + "image_patches_with_nuclei_counts"
 
-path_utils.halt_script_if_path_does_not_exist(input_folder_path)
+path_utils.halt_script_if_path_does_not_exist(input_folder_path_for_classifier)
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path)
-case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
+case_directory_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path_for_classifier)
 
 for case_directory_path in case_directory_paths:
     case_id = case_directory_path.split('/')[-1]

@@ -19,7 +19,8 @@ def create_jpeg_thumbnail_of_wsi(full_image_name_path):
 def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
                                                              thumbnail,
                                                              image_patch_metadata_objects,
-                                                             accuracy_percentage_threshold):
+                                                             accuracy_percentage_threshold,
+                                                             draw_border):
     for image_patch_metadata_object in image_patch_metadata_objects:
 
         saliency_prediction = image_patch_metadata_object.prediction_value_salient
@@ -28,7 +29,8 @@ def draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
             image_patch_metadata_object_scaled_to_new_resolution = svs_utils.scale_image_patch_metadata_object_to_new_resolution_level(
                 image_patch_metadata_object, enums.ResolutionLevel.THUMBNAIL, svs_image)
             thumbnail = image_utils.draw_annotation_box_onto_image(thumbnail,
-                                                                   image_patch_metadata_object_scaled_to_new_resolution)
+                                                                   image_patch_metadata_object_scaled_to_new_resolution,
+                                                                   draw_border)
             thumbnail = thumbnail.convert("RGBA")
 
     thumbnail = thumbnail.convert("RGB")
@@ -51,7 +53,7 @@ parser.add_argument("-apt", "--accuracy_percentage_threshold", type=float,
 args = parser.parse_args()
 
 svs_input_folder_path = args.svs_input_folder_path
-csv_input_folder_path = args.csv_input_folder_path
+csv_input_folder_path = args.csv_input_folder_path + "/saliency_predictions_csvs"
 output_folder_path = args.output_folder_path
 accuracy_percentage_threshold = args.accuracy_percentage_threshold
 
@@ -97,7 +99,8 @@ def create_saliency_prediction_overview_visualization_for_case(
     thumbnail_with_predictions_above_threshold = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
                                                                                                           thumbnail,
                                                                                                           image_patch_metadata_objects_corresponding_to_CID,
-                                                                                                          accuracy_percentage_threshold)
+                                                                                                          accuracy_percentage_threshold,
+                                                                                                          draw_border=False)
     thumbnail_with_predictions_above_threshold_path = output_path + case_ID + "_multiple_annotations.jpeg"
     thumbnail_with_predictions_above_threshold.save(thumbnail_with_predictions_above_threshold_path, 'JPEG')
 
@@ -108,7 +111,8 @@ def create_saliency_prediction_overview_visualization_for_case(
     thumbnail_with_single_predication = draw_saliency_prediction_annotation_boxes_onto_thumbnail(svs_image,
                                                                                                  thumbnail,
                                                                                                  [image_patch_metadata_object_with_highest_saliency],
-                                                                                                 accuracy_percentage_threshold)
+                                                                                                 accuracy_percentage_threshold,
+                                                                                                 draw_border=True)
     thumbnail_with_single_predication_path = output_path + case_ID + "_single_annotations.jpeg"
     thumbnail_with_single_predication.save(thumbnail_with_single_predication_path, 'JPEG')
 

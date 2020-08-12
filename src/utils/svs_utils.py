@@ -3,7 +3,6 @@ from .image_patch_metadata_object import *
 
 import openslide
 
-
 def get_SVS_level_ratio(svs_image, from_resolution_level, to_resolution_level):
     if from_resolution_level == ResolutionLevel.THUMBNAIL:
         from_resolution_level_width = svs_image.associated_images["thumbnail"].size[0]

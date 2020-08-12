@@ -21,7 +21,7 @@ input_folder_path = args.input_folder_path
 
 images_input_folder_path = args.input_folder_path + '/' + "preprocessed_high_res_image_patches" + "/"
 output_folder_path = args.output_folder_path
-reorganized_image_patches = args.output_folder_path + '/' + "preproessesed_image_patches_organized_for_classifier" + "/"
+reorganized_image_patches = args.output_folder_path + '/' + "preprocessed_image_patches_organized_for_classifier" + "/"
 
 image_mode = args.image_mode
 

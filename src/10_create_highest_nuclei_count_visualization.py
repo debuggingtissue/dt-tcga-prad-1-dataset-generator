@@ -29,7 +29,7 @@ def annotate_the_region_on_image_patch_with_the_highest_nuclei_count(highest_sal
     scaled_high_nuclei_count_metadata_image_patch_data.y_coordinate = abs(int(scaled_high_nuclei_count_metadata_image_patch_data.y_coordinate) - int(highest_saliency_image_patch_metadata_object.y_coordinate))
 
 
-    image_patch_with_annotation_box_of_highest_nuclei_count = image_utils.draw_annotation_box_onto_image(image_patch_with_highest_saliency, scaled_high_nuclei_count_metadata_image_patch_data)
+    image_patch_with_annotation_box_of_highest_nuclei_count = image_utils.draw_annotation_box_onto_image(image_patch_with_highest_saliency, scaled_high_nuclei_count_metadata_image_patch_data, draw_border=True)
 
     thumbnail_with_single_predication_path = output_path + case_ID + "_highest_nuclei_count_annotation.jpeg"
     image_patch_with_annotation_box_of_highest_nuclei_count.save(thumbnail_with_single_predication_path, 'JPEG')

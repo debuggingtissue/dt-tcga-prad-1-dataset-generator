@@ -26,18 +26,18 @@ class ImagePatchMetadataObject:
         self.prediction_nuclei_count = prediction_nuclei_count
         self.image_patch_path = image_patch_path
 
-    def __repr__(self):
-        return f"################################## \n" \
-               f"CID: {self.case_id} \n" \
-               f"---------------------------------- \n" \
-               f"resolution_level: {self.resolution_level} \n" \
-               f"x_coordinate: {self.x_coordinate} \n" \
-               f"y_coordinate: {self.y_coordinate} \n" \
-               f"width: {self.width} \n" \
-               f"height: {self.height} \n" \
-               f"prediction_value_salient: {self.prediction_value_salient} \n" \
-               f"prediction_nuclei_count: {self.prediction_nuclei_count} \n" \
-               f"image_patch_path: {self.image_patch_path} \n"
+    # def __repr__(self):
+    #     return f"################################## \n" \
+    #            f"CID: {self.case_id} \n" \
+    #            f"---------------------------------- \n" \
+    #            f"resolution_level: {self.resolution_level} \n" \
+    #            f"x_coordinate: {self.x_coordinate} \n" \
+    #            f"y_coordinate: {self.y_coordinate} \n" \
+    #            f"width: {self.width} \n" \
+    #            f"height: {self.height} \n" \
+    #            f"prediction_value_salient: {self.prediction_value_salient} \n" \
+    #            f"prediction_nuclei_count: {self.prediction_nuclei_count} \n" \
+    #            f"image_patch_path: {self.image_patch_path} \n"
 
 def image_patch_metadata_object_from_image_patch_dict(image_patch_dict):
     return ImagePatchMetadataObject(image_patch_dict.get(CASE_ID, None),
