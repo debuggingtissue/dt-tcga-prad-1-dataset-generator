@@ -484,7 +484,7 @@ def predict_and_output_results(case_id_path, output_directory_path):
 
     # Create model configuration in inference mode
     config_ = config.KaggleBowlConfig()
-    config_.GPU_COUNT = 0
+    config_.GPU_COUNT = 1
     config_.BATCH_SIZE = 1
     config_.IMAGES_PER_GPU = 1
     config_.display()
