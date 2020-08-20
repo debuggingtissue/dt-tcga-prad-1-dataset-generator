@@ -8,6 +8,8 @@ def halt_script_if_path_does_not_exist(path):
     if not os.path.exists(path):
         sys.exit("Error: Path doesn't exist, " + path)
 
+def does_path_exist(path):
+    return os.path.exists(path)
 
 def create_directory_if_directory_does_not_exist_at_path(path):
     if not os.path.exists(path):
