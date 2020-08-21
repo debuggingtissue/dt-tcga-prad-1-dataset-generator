@@ -21,10 +21,10 @@ source config.sh
 #  -sc $S2_SECOND_CENTERMOST_CROP_SIZE
 ###rm -r $S2_DIRECTORY_TO_DELETE
 ###
-#source "${S0_VIRTUAL_ENV_27}/bin/activate"
-#python 3_predict_saliency_for_image_patches.py \
-#  -i $S3_PREDITCT_SALIENCY_INPUT_DIRECTORY_PATH \
-#  -o $S3_PREDITCT_SALIENCY_OUTPUT_DIRECTORY_PATH
+source "${S0_VIRTUAL_ENV_27}/bin/activate"
+python 3_predict_saliency_for_image_patches.py \
+  -i $S3_PREDITCT_SALIENCY_INPUT_DIRECTORY_PATH \
+  -o $S3_PREDITCT_SALIENCY_OUTPUT_DIRECTORY_PATH
 ##rm -r $S3_PREDITCT_SALIENCY_DIRECTORY_TO_DELETE
 ##
 #source "${S0_VIRTUAL_ENV_36}/bin/activate"
@@ -56,10 +56,10 @@ source config.sh
 #  -o $S7_REORGANIZE_DIRECTORIES_FOR_SEGMENTOR_OUTPUT_DIRECTORY_PATH \
 #  -im $S7_REORGANIZE_DIRECTORIES_FOR_SEGMENTOR_IMAGE_MODE
 #####
-source "${S0_VIRTUAL_NUCLEI_ENV_36}/bin/activate"
-python3.6 8_count_and_annotate_nuclei_in_sub_image_patches.py \
-  -i $S8_NUCLEI_SEGMENTOR_INPUT_DIRECTORY_PATH \
-  -o $S8_NUCLEI_SEGMENTOR_OUTPUT_DIRECTORY_PATH
+#source "${S0_VIRTUAL_NUCLEI_ENV_36}/bin/activate"
+#python3.6 8_count_and_annotate_nuclei_in_sub_image_patches.py \
+#  -i $S8_NUCLEI_SEGMENTOR_INPUT_DIRECTORY_PATH \
+#  -o $S8_NUCLEI_SEGMENTOR_OUTPUT_DIRECTORY_PATH
 ####rm -r $S8_NUCLEI_SEGMENTOR_DIRECTORY_TO_DELETE
 ####
 #python3.6 9_find_sub_image_patch_with_highest_nuclei_density.py \
