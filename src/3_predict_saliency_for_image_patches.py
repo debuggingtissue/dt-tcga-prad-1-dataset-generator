@@ -17,8 +17,8 @@ def load_images_patches_to_caffe(full_image_patches_paths):
 
 def predict_saliency_for_loaded_image_patches(loaded_image_patches):
 
-    # caffe.set_mode_gpu();
-    # caffe.set_device(0);
+    caffe.set_mode_gpu();
+    caffe.set_device(0);
 
     net = caffe.Classifier("deepscope/deploy.prototxt",
                            "deepscope/PRAD.patho_tune_joe-overlap75-nbr.rightleft.trim512.rot360flip.shuffle.3fold.trial9_patho_tune_trial9_fold1_iter_10000.caffemodel",

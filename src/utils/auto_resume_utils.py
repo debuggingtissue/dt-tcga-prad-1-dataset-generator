@@ -27,12 +27,19 @@ def is_case_already_classified_into_output_csv(input_case_folder_to_predictor_pa
     return False
 
 def is_case_already_classified_into_output_directory(input_directory_path, output_directory_path):
-    output_directory_path = does_path_exist(output_directory_path)
-    if not output_directory_path:
+    does_output_directory_path_exist = does_path_exist(output_directory_path)
+    if not does_output_directory_path_exist:
+        print("NO OUTPUT DIRECTORY EXISTS")
         return False
-    input_file_paths = create_full_paths_to_files_in_directory_path(input_directory_path)
+    print(input_directory_path)
+    input_directory_paths = create_full_paths_to_directories_in_directory_path(input_directory_path)
     output_file_paths = create_full_paths_to_files_in_directory_path(output_directory_path)
-    if len(input_file_paths) == len(output_file_paths):
+    if len(input_directory_paths) == len(output_file_paths):
+        print("INPUT FILE COUNT IS EQUAL OUTPUT FILE COUNT")
         return True
+    print(len(input_directory_paths))
+    print(len(output_file_paths))
+    print("INPUT FILE COUNT IS NOT EQUAL OUTPUT FILE COUNT")
+
     return False
 
