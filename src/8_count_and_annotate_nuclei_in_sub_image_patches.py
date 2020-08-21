@@ -1,5 +1,5 @@
 import argparse
-from utils import path_utils
+from utils import path_utils, auto_resume_utils
 from mirzaevinom_nuclei_segmenter import predict
 from distutils.dir_util import copy_tree
 
@@ -29,7 +29,12 @@ for case_directory_path in case_directory_paths:
     case_id_output_path = image_patches_with_nuclei_counts_output_folder_path + "/" + case_id
     path_utils.create_directory_if_directory_does_not_exist_at_path(case_id_output_path)
 
+    is_case_already_classified = auto_resume_utils.is_case_already_classified_into_output_directory(case_directory_path, case_id_output_path + "/" + 'images_original')
+    if is_case_already_classified:
+        continue
+
     output_predictions(case_directory_path + "/", case_id_output_path)
+
 copy_tree(input_folder_path + "/preprocessed_high_res_image_patches", output_folder_path + "/preprocessed_high_res_image_patches")
 copy_tree(input_folder_path + "/visualizations", output_folder_path + "/visualizations")
 

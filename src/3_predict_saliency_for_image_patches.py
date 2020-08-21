@@ -4,7 +4,7 @@ import numpy as np
 import csv
 
 from utils import path_utils, image_patch_file_name_parser, image_patch_file_name_constants, \
-    image_patch_predictions_constants
+    image_patch_predictions_constants, auto_resume_utils
 
 
 def load_images_patches_to_caffe(full_image_patches_paths):
@@ -17,8 +17,8 @@ def load_images_patches_to_caffe(full_image_patches_paths):
 
 def predict_saliency_for_loaded_image_patches(loaded_image_patches):
 
-    caffe.set_mode_gpu();
-    caffe.set_device(0);
+    # caffe.set_mode_gpu();
+    # caffe.set_device(0);
 
     net = caffe.Classifier("deepscope/deploy.prototxt",
                            "deepscope/PRAD.patho_tune_joe-overlap75-nbr.rightleft.trim512.rot360flip.shuffle.3fold.trial9_patho_tune_trial9_fold1_iter_10000.caffemodel",
@@ -46,18 +46,23 @@ output_folder_path_for_prediction_csv_files = output_folder_path + '/' + "salien
 path_utils.create_directory_if_directory_does_not_exist_at_path(output_folder_path_for_prediction_csv_files)
 
 
-full_case_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
+case_paths = path_utils.create_full_paths_to_directories_in_directory_path(input_folder_path)
 
-for full_case_path in full_case_paths:
 
-    case_predictions = []
+for case_path in case_paths:
 
-    full_image_patches_paths = path_utils.create_full_paths_to_files_in_directory_path(full_case_path)
-    loaded_image_patches = load_images_patches_to_caffe(full_image_patches_paths)
+    output_case_prediction_csv_path = output_folder_path_for_prediction_csv_files + '/' + case_path.split('/')[-1] + '.csv'
+    is_case_already_classified = auto_resume_utils.is_case_already_classified_into_output_csv(case_path, output_case_prediction_csv_path)
+    if is_case_already_classified:
+        continue
+
+    image_patch_paths = path_utils.create_full_paths_to_files_in_directory_path(case_path)
+    loaded_image_patches = load_images_patches_to_caffe(image_patch_paths)
     predictions_for_image_patches = predict_saliency_for_loaded_image_patches(loaded_image_patches)
+    case_predictions = []
     case_predictions.append(predictions_for_image_patches)
 
-    with open(output_folder_path_for_prediction_csv_files + '/' + full_case_path.split('/')[-1] + '.csv',
+    with open(output_case_prediction_csv_path,
               'w') as csvfile:
         fieldnames = [image_patch_file_name_constants.CASE_ID,
                       image_patch_file_name_constants.X_COORDINATE,
@@ -71,8 +76,8 @@ for full_case_path in full_case_paths:
 
         writer.writeheader()
 
-        for image_patch_index, full_image_patches_path in enumerate(full_image_patches_paths):
-            full_image_name = full_image_patches_path.split('/')[-1]
+        for image_patch_index, image_patches_path in enumerate(image_patch_paths):
+            full_image_name = image_patches_path.split('/')[-1]
             image_patch_dict = image_patch_file_name_parser.parse_image_patch_file_name_to_dict(full_image_name)
             image_patch_dict[image_patch_predictions_constants.PREDICTION_VALUE_NON_SALIENT] = \
                 case_predictions[0][image_patch_index][0]

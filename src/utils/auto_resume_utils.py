@@ -1,6 +1,5 @@
 
 def is_case_already_classified_into_output_csv(input_case_folder_to_predictor_path, predicted_cases_csv_folder_path):
-
     case_name = input_case_folder_to_predictor_path.split()[-1]
     predicted_csv_for_case_path = predicted_cases_csv_folder_path + case_name + ".csv"
     csv_for_case_exists = path_utils.does_path_exist(predicted_csv_for_case_path)

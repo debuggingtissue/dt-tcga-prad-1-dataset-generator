@@ -80,6 +80,7 @@ case_image_patch_metadata_objects_csv_paths = path_utils.create_full_paths_to_fi
     csv_input_folder_path)
 CID_indexed_image_patch_metadata_objects_dict = image_patch_metadata_object_utils.case_image_patch_metadata_csv_paths_to_dict_indexed_by_CID(
     case_image_patch_metadata_objects_csv_paths)
+print(CID_indexed_image_patch_metadata_objects_dict)
 
 
 def create_saliency_prediction_overview_visualization_for_case(
