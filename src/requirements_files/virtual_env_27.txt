@@ -28,7 +28,7 @@ python-dateutil==2.5.0
 python-gflags==3.1.2
 pytz==2019.3
 PyWavelets==1.0.3
-PyYAML==5.3
+PyYAML==5.4
 scandir==1.10.0
 scikit-image==0.14.5
 scipy==1.2.3
