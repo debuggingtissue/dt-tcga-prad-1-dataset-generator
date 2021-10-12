@@ -57,7 +57,7 @@ numpy==1.15.4
 oauth==1.0.1
 oauthlib==3.1.0
 olefile==0.45.1
-opencv-python==3.4.9.33
+opencv-python==3.4.7.28
 openslide-python==1.1.1
 opt-einsum==3.2.0
 pandas==0.24.2
