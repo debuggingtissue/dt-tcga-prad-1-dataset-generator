@@ -8,7 +8,7 @@ kiwisolver==1.2.0
 Markdown==3.2.1
 matplotlib==2.1.0
 networkx==2.4
-numpy==1.13.3
+numpy==1.22.0
 opencv-python==3.4.0.14
 pandas==0.22.0
 Pillow==7.1.1
